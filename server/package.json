@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev":"ts-node --files index.ts",
+    "build":"tsc",
+    "start":"tsc && node dist/index.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PabloSan1997/MyVideo.git"
+  },
+  "keywords": [
+    "myvideo",
+    "exrpess",
+    "typescript",
+    "express",
+    "postgress"
+  ],
+  "author": "Pablo Sg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PabloSan1997/MyVideo/issues"
+  },
+  "homepage": "https://github.com/PabloSan1997/MyVideo#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
