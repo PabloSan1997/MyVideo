@@ -17,6 +17,7 @@ interface LosVideosInteface {
 interface UsuarioInterface {
 	id_usuario: string;
 	name: string;
+	userName: string;
 	url_image: string;
 	password: string;
 	rol: string;
@@ -38,5 +39,11 @@ type UsuarioLogin = {
 type Respuesta = {
 	statusCode: number;
 	message: string;
-	result: object | object[]
+	results: object | object[]
 }
+
+type TokenResponse = {
+	user:string,
+	rol:string
+}
+

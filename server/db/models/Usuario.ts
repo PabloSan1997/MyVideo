@@ -12,6 +12,9 @@ export class Usuario implements UsuarioInterface {
     @Column({ length: 5000 })
     	url_image: string;
 
+    @Column({unique:true})
+    	userName: string;
+    
     @Column({ length: 5000 })
     	password: string;
 
