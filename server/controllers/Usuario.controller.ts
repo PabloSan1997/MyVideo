@@ -9,7 +9,8 @@ export class UsuarioController {
 		try {
 			const usuario = req.body as UsuarioAgregar;
 			const nuevoUsuario = await servicio.addData(usuario);
-			respuestaFormat(res, nuevoUsuario, 201, 'Accepted');
+			const clonar = { ...nuevoUsuario, password: '' };
+			respuestaFormat(res, clonar, 201, 'Accepted');
 		} catch (error) {
 			next(error);
 		}
@@ -18,6 +19,7 @@ export class UsuarioController {
 		try {
 			const data = req.body as UsuarioLogin;
 			const token = await servicio.checUser(data);
+
 			respuestaFormat(res, token);
 		} catch (error) {
 			next(error);
