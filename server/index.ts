@@ -18,5 +18,5 @@ AppDataSource.initialize()
 			console.log(`http://localhost:${variables.port}`);
 		});
 	})
-	.catch(() => { console.error('Error con la base de datos'); });
+	.catch((e) => { console.error(e); });
 

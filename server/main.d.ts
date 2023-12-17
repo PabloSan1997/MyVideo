@@ -5,7 +5,7 @@ interface PortadaInterface {
 	nombre: string;
 	miniDesc: string;
 	url_image: string;
-	fecha: date;
+	createdAt: Date;
 }
 
 interface LosVideosInteface {
