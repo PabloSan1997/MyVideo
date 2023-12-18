@@ -1,7 +1,10 @@
-
+import {HashRouter} from 'react-router-dom';
+import { MyRutes } from './Routes';
 
 export function App(){
     return(
-        <div>Aqui va la pagina</div>
+        <HashRouter>
+            <MyRutes/>
+        </HashRouter>
     );
 }
