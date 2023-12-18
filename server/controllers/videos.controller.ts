@@ -34,4 +34,14 @@ export class VideosController {
 			next(error);
 		}
 	}
+	async eliminarVideo(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { autorization } = req.headers as { autorization: string };
+			const { id_video } = req.params as { id_video: string };
+			await servicios.eliminarVideo(autorization, id_video);
+			res.sendStatus(204);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
