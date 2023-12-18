@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import { crearApi } from './routes';
 import { variables } from './utilities/envVariables';
 import { AppDataSource } from './db/config';
+import { boomHandle } from './middlewares/boomHandle';
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 crearApi(app);
+
+app.use(boomHandle);
 
 AppDataSource.initialize()
 	.then(() => {

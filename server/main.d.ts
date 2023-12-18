@@ -14,6 +14,15 @@ interface LosVideosInteface {
 	url_video: string;
 }
 
+
+interface VideosRequest {
+	nombre: string;
+	miniDesc: string;
+	url_image: string;
+	descripcion: string;
+	url_video: string;
+}
+
 interface UsuarioInterface {
 	id_usuario: string;
 	name: string;
