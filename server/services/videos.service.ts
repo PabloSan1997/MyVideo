@@ -24,13 +24,17 @@ export class VideosService {
 		const videos = await respositorioVideo.findOne({
 			where:{
 				id_video
-			},
-			relations:{
-				portada:true
 			}
 		});
 		if (!videos) throw Boom.notFound('No se encontró video');
-		return videos;
+		const mostrar = {
+			...videos,
+			portada:{
+				nombre:portada.nombre,
+				createdAt:portada.createdAt
+			}
+		};
+		return mostrar;
 	}
 	async agregarVideo(token: string, nuevoVideo: VideosRequest) {
 		const { rol } = await serviciosUser.procesarToken(token);
