@@ -6,3 +6,20 @@ interface UsuarioInterface {
     name:string,
     url_image:string
 }
+
+type UsuarioLogin = {
+	userName: string;
+	password: string;
+};
+
+type Respuesta = {
+    statusCode:number;
+    message:string;
+    results:object|object[]
+}
+type UserInitialState = {
+    url_image: string,
+    name: string,
+    token: string,
+    loading: boolean
+}

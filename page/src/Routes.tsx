@@ -3,15 +3,17 @@ import { Login } from './Layouts/Login';
 import { Home } from './Layouts/Home';
 import { Video } from './Layouts/Video';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const rutas = {
     login:'/login',
     home:'/',
     video:'/video'
 }
 
+
 export const MyRutes =()=>useRoutes([
     {
-        path:'/login',
+        path:rutas.login,
         element:<Login/>
     },
     {
