@@ -6,6 +6,7 @@ import {Navigate} from 'react-router-dom';
 
 export function Login(){
     const data = useAppSelector(state=>state.user);
+    window.document.title = 'MyVideos | Login';
     if(data.token) return <Navigate to={rutas.home}/>
     return(
         <>

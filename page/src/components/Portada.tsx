@@ -1,6 +1,7 @@
 import { convertirTiempo } from "../utilities/convertirTiempo";
 import React from "react";
 
+
 export function Portada({ nombre, url_image, miniDesc, createdAt }: PortadaInterface) {
     const [hover, setHover] = React.useState(false);
     const estilo = `w-full flex mb-10 transition-colors py-5 ${hover?'bg-rojoVideos-200':'bg-rojoVideos-100'}`;

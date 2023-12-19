@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { leerVideos } from "../api/videoRequest";
 
-const initialState: {portadas:PortadaInterface[]} = {
-    portadas:[]
+const initialState: { portadas: PortadaInterface[], loading: boolean } = {
+    portadas: [],
+    loading: false
 }
 
 const llamarPortadas = createAsyncThunk(
     'portada/llamar',
-    async(token:string)=>{
+    async (token: string) => {
         try {
             const data = await leerVideos(token);
             return data;
@@ -18,12 +19,20 @@ const llamarPortadas = createAsyncThunk(
 );
 
 const videoaSlice = createSlice({
-    name:'videos',
+    name: 'videos',
     initialState,
-    reducers:{},
-    extraReducers:(builder)=>{
-        builder.addCase(llamarPortadas.fulfilled, (state, action)=>{
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(llamarPortadas.fulfilled, (state, action) => {
+            state.loading = false;
             state.portadas = action.payload;
+        });
+        builder.addCase(llamarPortadas.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(llamarPortadas.rejected, (state) => {
+            state.loading = false;
+            state.portadas = [];
         });
     }
 });

@@ -9,9 +9,9 @@ import { storageUsuario } from './storage/usuarioStorage';
 
 export function App() {
     const state = useAppSelector(state => state.user);
-    const loadingUser = state.loading;
-
+    window.document.title = 'MyVideos | Home'
     const [, setCookie] = useCookies(['usuario']);
+
     React.useEffect(() => {
         if (state.token) {
             setCookie('usuario', state.token, { maxAge: 5000 });
@@ -19,7 +19,7 @@ export function App() {
         }
     }, [state.token]);
 
-    if (loadingUser) return <Loading />
+    if(state.loading) return <Loading/>
     return (
         <HashRouter>
             <MyRutes />
