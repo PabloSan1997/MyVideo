@@ -1,12 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux'
 import { userReducer } from '../slice/userSlice'
+import { portadaReducer } from '../slice/videosSlice'
 
 export const store = configureStore({
   reducer: {
-    user:userReducer
+    user:userReducer,
+    losVideos:portadaReducer
   },
+  devTools:import.meta.env.DEV
 })
+
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 type RootState = ReturnType<typeof store.getState>

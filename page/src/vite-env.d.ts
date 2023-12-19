@@ -27,3 +27,11 @@ type UserInitialState = {
 type Children = {
     children:JSX.Element|JSX.Element[]
 }
+
+interface PortadaInterface {
+	id_portada: string;
+	nombre: string;
+	miniDesc: string;
+	url_image: string;
+	createdAt: string;
+}

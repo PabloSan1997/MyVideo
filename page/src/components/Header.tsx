@@ -26,7 +26,7 @@ export function Header(data:UserInitialState) {
                     />
                     <div className="m-auto mr-5">
                         <span
-                            className='text-rojoVideos-50 mr-3 font-bold text-xl'
+                            className='text-rojoVideos-50 mr-6 font-bold text-xl'
                         >{data.name}</span>
                         <span onClick={cerrar}
                             className='text-rojoVideos-50 select-none cursor-pointer hover:underline'
