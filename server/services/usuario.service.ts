@@ -15,10 +15,10 @@ export class UsuarioService {
 	}
 	async checUser(log: UsuarioLogin) {
 		const ver = await repositorio.findOne({ where: { userName: log.userName } });
-		if (!ver) throw 'Usuario o contra no encontradas';
+		if (!ver) throw Boom.badRequest('Contraseña o usuario Incorrectos');
 
 		const checar = await bcrypt.compare(log.password, ver.password);
-		if (!checar) throw 'Usuario o contra no encontradas';
+		if (!checar) throw Boom.badRequest('Contraseña o usuario Incorrectos');
 
 		const password = await hash(log.password, 8);
 		await repositorio.update({ id_usuario: ver.id_usuario }, { password });
