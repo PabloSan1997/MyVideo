@@ -21,7 +21,7 @@ export const MyRutes =()=>useRoutes([
         element:<Home/>
     },
     {
-        path:rutas.video,
+        path:rutas.video+'/:id_portada',
         element:<Video/>
     },
     {

@@ -1,9 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { leerVideos } from "../api/videoRequest";
+import { leerUnSoloVideo, leerVideos } from "../api/videoRequest";
 
-const initialState: { portadas: PortadaInterface[], loading: boolean } = {
+const initialState: { portadas: PortadaInterface[], loading: boolean, video:LosVideosInteface } = {
     portadas: [],
-    loading: false
+    loading: false,
+    video:{
+        descripcion:'',
+        id_video:'',
+        url_video:'',
+        portada:{
+            createdAt:'',
+            nombre:''
+        }
+    }
 }
 
 const llamarPortadas = createAsyncThunk(
@@ -15,6 +24,14 @@ const llamarPortadas = createAsyncThunk(
         } catch (error) {
             return [];
         }
+    }
+);
+
+const videoSeleccionado = createAsyncThunk(
+    'video/Seleccionado',
+    async({token, id_portada}:{token:string, id_portada:string})=>{
+        const video = await leerUnSoloVideo(token, id_portada);
+        return video;
     }
 );
 
@@ -34,6 +51,10 @@ const videoaSlice = createSlice({
             state.loading = false;
             state.portadas = [];
         });
+
+        builder.addCase(videoSeleccionado.fulfilled, (state, action)=>{
+            state.video = action.payload;
+        });
     }
 });
 
@@ -42,5 +63,6 @@ const portadaReducer = videoaSlice.reducer;
 
 export {
     portadaReducer,
-    llamarPortadas
+    llamarPortadas,
+    videoSeleccionado
 }

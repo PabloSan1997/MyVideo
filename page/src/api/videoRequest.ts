@@ -16,3 +16,18 @@ export async function leerVideos(autorization:string){
     }
     return ver.results as PortadaInterface[]
 }
+
+export async function  leerUnSoloVideo(autorization:string,id_portada:string):Promise<LosVideosInteface> {
+    const url = import.meta.env.VITE_URLBASE;
+    const ft = await fetch(`${url}/video/${id_portada}`,{
+        method:'GET',
+        headers:{
+            autorization
+        }
+    });
+    const data = await ft.json() as Respuesta;
+    if(data.statusCode>299){
+        throw data.message;
+    }
+    return data.results as LosVideosInteface;
+}

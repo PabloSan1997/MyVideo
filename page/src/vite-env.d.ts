@@ -35,3 +35,13 @@ interface PortadaInterface {
 	url_image: string;
 	createdAt: string;
 }
+
+interface LosVideosInteface {
+	id_video: string;
+	descripcion: string;
+	url_video: string;
+    portada:{
+        nombre:string,
+        createdAt:string
+    }
+}
