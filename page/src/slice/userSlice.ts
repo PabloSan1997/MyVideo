@@ -30,6 +30,11 @@ const userSlice = createSlice({
             state.name='';
             state.token='';
             state.url_image='';
+        },
+        ponerToken:(state, action)=>{
+            state.token = action.payload.token;
+            state.name = action.payload.name;
+            state.url_image = action.payload.url_image;
         }
     },
     extraReducers: (builder) => {
@@ -53,10 +58,11 @@ const userSlice = createSlice({
 });
 
 const userReducer = userSlice.reducer;
-const {cerrarSecion} = userSlice.actions;
+const {cerrarSecion, ponerToken} = userSlice.actions;
 
 export {
     userReducer,
     loggear,
-    cerrarSecion
+    cerrarSecion,
+    ponerToken
 }

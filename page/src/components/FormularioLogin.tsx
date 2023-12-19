@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { loggear } from "../slice/userSlice";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { useAppDispatch } from "../store/store";
 import React from "react";
-
 
 const initalState = { userName: '', password: '' };
 const labelStyle =
@@ -11,9 +11,7 @@ const inputStyle =
 
 
 export function FormularioLogin() {
-    const state = useAppSelector(state => state.user);
     const dispatch = useAppDispatch();
-
     const [texto, setTexto] = React.useState<UsuarioLogin>(initalState);
     const escribirUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTexto({ ...texto, userName: e.target.value });
@@ -21,10 +19,10 @@ export function FormularioLogin() {
     const escribirPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTexto({ ...texto, password: e.target.value });
     }
-    console.log(state);
+
     const subir = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(texto.password && texto.userName){
+        if (texto.password && texto.userName) {
             dispatch(loggear(texto));
         }
     }

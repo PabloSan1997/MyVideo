@@ -1,6 +1,5 @@
 
 
-import React from "react";
 import { Header } from "../components/Header";
 import { useAppSelector } from "../store/store";
 import { Navigate } from "react-router-dom";

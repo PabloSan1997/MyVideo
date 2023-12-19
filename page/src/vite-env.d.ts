@@ -23,3 +23,7 @@ type UserInitialState = {
     token: string,
     loading: boolean
 }
+
+type Children = {
+    children:JSX.Element|JSX.Element[]
+}

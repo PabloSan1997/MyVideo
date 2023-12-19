@@ -1,11 +1,16 @@
+import { useCookies } from "react-cookie";
 import { cerrarSecion } from "../slice/userSlice";
 import { useAppDispatch } from "../store/store";
+import { storageUsuario } from "../storage/usuarioStorage";
 
 
 export function Header(data:UserInitialState) {
     const dispatch = useAppDispatch();
+    const [,,removeCookie] = useCookies(['usuario']);
     const cerrar = () =>{
+        storageUsuario.guardar({url_image:'', name:''});
         dispatch(cerrarSecion());
+        removeCookie('usuario');
     }
     return (
         <header className="bg-rojoVideos-950 py-3 flex h-15">
