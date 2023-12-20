@@ -2,20 +2,28 @@ import { useCookies } from "react-cookie";
 import { cerrarSecion } from "../slice/userSlice";
 import { useAppDispatch } from "../store/store";
 import { storageUsuario } from "../storage/usuarioStorage";
+import { useNavigate } from "react-router-dom";
+import { rutas } from "../Routes";
 
 
-export function Header(data:UserInitialState) {
+export function Header(data: UserInitialState) {
     const dispatch = useAppDispatch();
-    const [,,removeCookie] = useCookies(['usuario']);
-    const cerrar = () =>{
-        storageUsuario.guardar({url_image:'', name:''});
+    const [, , removeCookie] = useCookies(['usuario']);
+    const navegar = useNavigate();
+    const ir = () => {
+        navegar(rutas.home);
+    }
+    const cerrar = () => {
+        storageUsuario.guardar({ url_image: '', name: '' });
         dispatch(cerrarSecion());
         removeCookie('usuario');
     }
     return (
         <header className="bg-rojoVideos-950 py-3 flex h-15">
             <h1
-                className='text-rojoVideos-50 mx-4 text-3xl m-auto'
+                className='text-rojoVideos-50 mx-4 text-3xl m-auto cursor-pointer hover:text-rojoVideos-200'
+                onClick={ir}
+
             >MyVideos</h1>
             {data.token ? (
                 <>

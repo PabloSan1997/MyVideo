@@ -6,6 +6,7 @@ import { videoSeleccionado } from '../slice/videosSlice';
 import { useCookies } from 'react-cookie';
 import { Header } from '../components/Header';
 import { Pantalla } from '../components/Pantalla';
+import { NotFound } from '../components/Notfound';
 
 export function Video() {
   const parametros = useParams() as { id_portada: string };
@@ -16,11 +17,11 @@ export function Video() {
   React.useEffect(() => {
     dispatch(videoSeleccionado({ token: cookie.usuario, id_portada: parametros.id_portada }));
   }, []);
-
+  if(!video.id_video) return <NotFound/>
   return (
     <>
       <Header {...usuario} />
-      <Pantalla url_video={video.url_video}/>
+      <Pantalla {...video}/>
     </>
   );
 }

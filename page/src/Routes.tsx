@@ -2,6 +2,7 @@ import {useRoutes} from 'react-router-dom';
 import { Login } from './Layouts/Login';
 import { Home } from './Layouts/Home';
 import { Video } from './Layouts/Video';
+import { NotFound } from './components/Notfound';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const rutas = {
@@ -26,6 +27,6 @@ export const MyRutes =()=>useRoutes([
     },
     {
         path:'*',
-        element:<p>not found</p>
+        element:<NotFound/>
     }
 ]);
