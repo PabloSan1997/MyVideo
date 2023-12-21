@@ -8,10 +8,14 @@ import Boom from '@hapi/boom';
 const repositorio = AppDataSource.getRepository(Usuario);
 export class UsuarioService {
 	async addData(data: UsuarioAgregar): Promise<Usuario> {
-		const nuevoUsuario = repositorio.create(data);
-		nuevoUsuario.password = await bcrypt.hash(nuevoUsuario.password, 6);
-		await repositorio.manager.save(nuevoUsuario);
-		return nuevoUsuario;
+		try {
+			const nuevoUsuario = repositorio.create(data);
+			nuevoUsuario.password = await bcrypt.hash(nuevoUsuario.password, 6);
+			await repositorio.manager.save(nuevoUsuario);
+			return nuevoUsuario;
+		} catch (error) {
+			throw Boom.badRequest('No se puede agregar usuario');
+		}
 	}
 	async checUser(log: UsuarioLogin) {
 		const ver = await repositorio.findOne({ where: { userName: log.userName } });
@@ -24,12 +28,13 @@ export class UsuarioService {
 		await repositorio.update({ id_usuario: ver.id_usuario }, { password });
 
 		const token = await this.generarToken(ver);
-		if(!token) throw Boom.badRequest('No tienes permiso');
-		return { token, name: ver.name, url_image: ver.url_image };
+		if (!token) throw Boom.badRequest('No tienes permiso');
+		const modo = ver.rol === 'admin';
+		return { token, name: ver.name, url_image: ver.url_image, modo };
 	}
 	async procesarToken(token: string) {
 		const ver = await this.decodificarToken(token);
-		if(typeof ver == 'string') throw Boom.badRequest(ver);
+		if (typeof ver == 'string') throw Boom.badRequest(ver);
 		const { rol, user } = ver;
 		const buscar = await repositorio.findOneBy({ id_usuario: user });
 		if (!buscar) throw 'No tienes permiso para esta accion';
