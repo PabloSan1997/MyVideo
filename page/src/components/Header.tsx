@@ -14,7 +14,7 @@ export function Header(data: UserInitialState) {
         navegar(rutas.home);
     }
     const cerrar = () => {
-        storageUsuario.guardar({ url_image: '', name: '' });
+        storageUsuario.guardar({ url_image: '', name: '', modo:false });
         dispatch(cerrarSecion());
         removeCookie('usuario');
     }

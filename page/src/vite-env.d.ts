@@ -1,12 +1,6 @@
 /// <reference types="vite/client" />
 
 
-interface UsuarioInterface {
-	token:string,
-    name:string,
-    url_image:string
-}
-
 type UsuarioLogin = {
 	userName: string;
 	password: string;
@@ -21,7 +15,8 @@ type UserInitialState = {
     url_image: string,
     name: string,
     token: string,
-    loading: boolean
+    loading: boolean,
+    modo:boolean;
 }
 
 type Children = {
@@ -44,4 +39,12 @@ interface LosVideosInteface {
         nombre:string,
         createdAt:string
     }
+}
+
+interface VideoNuevoInterface{
+    nombre: string,
+	miniDesc:string,
+	url_image: string,
+	descripcion: string,
+	url_video: string
 }

@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { leerUnSoloVideo, leerVideos } from "../api/videoRequest";
+import { agregarVideo, leerUnSoloVideo, leerVideos } from "../api/videoRequest";
 
-const initialState: { portadas: PortadaInterface[], loading: boolean, video:LosVideosInteface } = {
+const initialState: { portadas: PortadaInterface[], loading: boolean, video: LosVideosInteface } = {
     portadas: [],
     loading: false,
-    video:{
-        descripcion:'',
-        id_video:'',
-        url_video:'',
-        portada:{
-            createdAt:'',
-            nombre:''
+    video: {
+        descripcion: '',
+        id_video: '',
+        url_video: '',
+        portada: {
+            createdAt: '',
+            nombre: ''
         }
     }
 }
@@ -29,9 +29,17 @@ const llamarPortadas = createAsyncThunk(
 
 const videoSeleccionado = createAsyncThunk(
     'video/Seleccionado',
-    async({token, id_portada}:{token:string, id_portada:string})=>{
+    async ({ token, id_portada }: { token: string, id_portada: string }) => {
         const video = await leerUnSoloVideo(token, id_portada);
         return video;
+    }
+);
+
+const agregarNuevoVideo = createAsyncThunk(
+    'agregar/Video',
+    async ({ token, nuevoVideo }: { token: string, nuevoVideo: VideoNuevoInterface }) => {
+        const videoAgregado = await agregarVideo(token, nuevoVideo);
+        return videoAgregado;
     }
 );
 
@@ -52,8 +60,14 @@ const videoaSlice = createSlice({
             state.portadas = [];
         });
 
-        builder.addCase(videoSeleccionado.fulfilled, (state, action)=>{
+        builder.addCase(videoSeleccionado.fulfilled, (state, action) => {
             state.video = action.payload;
+        });
+
+        builder.addCase(agregarNuevoVideo.fulfilled, (state, action) => {
+            const datos = state.portadas;
+            state.portadas = [...datos, action.payload];
+            state.loading = false;
         });
     }
 });
@@ -64,5 +78,6 @@ const portadaReducer = videoaSlice.reducer;
 export {
     portadaReducer,
     llamarPortadas,
-    videoSeleccionado
+    videoSeleccionado,
+    agregarNuevoVideo
 }

@@ -26,6 +26,9 @@ export default {
 			borderColor: {
 				rojoVideos,
 			},
+			transitionDuration:{
+				media:'0.5s'
+			}
 		},
 	},
 	plugins: [],

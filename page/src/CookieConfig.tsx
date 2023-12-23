@@ -10,8 +10,8 @@ export function CookieConfig({children}:Children){
     const dispatch = useDispatch();
     React.useEffect(()=>{
         if(cookie.usuario){
-            const {name, url_image} = storageUsuario.leer();
-            dispatch(ponerToken({token:cookie.usuario, name, url_image}));
+            const {name, url_image, modo} = storageUsuario.leer();
+            dispatch(ponerToken({token:cookie.usuario, name, url_image, modo}));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);    

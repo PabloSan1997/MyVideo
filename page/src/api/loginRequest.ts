@@ -15,6 +15,6 @@ export async function loginRequest(data:UsuarioLogin) {
         const results = proceso.results as {messsage:string};
         throw results.messsage;
     }
-    const results = proceso.results as UsuarioInterface;
+    const results = proceso.results as UserInitialState;
     return results;
 }

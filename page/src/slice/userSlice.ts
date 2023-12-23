@@ -6,7 +6,8 @@ const initialState: UserInitialState = {
     url_image: '',
     name: '',
     token: '',
-    loading: false
+    loading: false,
+    modo: false
 }
 
 const loggear = createAsyncThunk(
@@ -25,16 +26,18 @@ const userSlice = createSlice({
     name: 'usuario',
     initialState,
     reducers: {
-        cerrarSecion:(state)=>{
-            state.loading=false;
-            state.name='';
-            state.token='';
-            state.url_image='';
+        cerrarSecion: (state) => {
+            state.loading = false;
+            state.name = '';
+            state.token = '';
+            state.url_image = '';
+            state.modo = false;
         },
-        ponerToken:(state, action)=>{
+        ponerToken: (state, action) => {
             state.token = action.payload.token;
             state.name = action.payload.name;
             state.url_image = action.payload.url_image;
+            state.modo = action.payload.modo;
         }
     },
     extraReducers: (builder) => {
@@ -44,12 +47,14 @@ const userSlice = createSlice({
             state.token = respuesta.token;
             state.url_image = respuesta.url_image;
             state.loading = false;
+            state.modo = respuesta.modo;
         });
         builder.addCase(loggear.rejected, (state) => {
             state.name = '';
             state.token = '';
             state.url_image = '';
             state.loading = false;
+            state.modo = false;
         });
         builder.addCase(loggear.pending, (state) => {
             state.loading = true;
@@ -58,7 +63,7 @@ const userSlice = createSlice({
 });
 
 const userReducer = userSlice.reducer;
-const {cerrarSecion, ponerToken} = userSlice.actions;
+const { cerrarSecion, ponerToken } = userSlice.actions;
 
 export {
     userReducer,

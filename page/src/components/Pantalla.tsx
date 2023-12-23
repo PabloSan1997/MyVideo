@@ -1,5 +1,4 @@
 import ReactPlayer from 'react-player';
-import '../estilos/range.css';
 import { Descripcion } from './Descripcion';
 
 export function Pantalla({ url_video, portada, descripcion}: LosVideosInteface) {
