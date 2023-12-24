@@ -16,68 +16,78 @@ export class VideosService {
 		return portadas;
 	}
 	async menuUnVideo(token: string, id_portada: string) {
-		const { rol } = await serviciosUser.procesarToken(token);
-		if (rol !== 'admin' && rol !== 'user') throw Boom.badRequest('No tienes permiso para esta accion');
-		const portada = await respositorioPortada.findOne({ where: { id_portada }, relations: { videos: true } });
-		if (!portada) throw Boom.notFound('No se encontró video');
-		const id_video = portada.videos.id_video;
-		const videos = await respositorioVideo.findOne({
-			where:{
-				id_video
-			}
-		});
-		if (!videos) throw Boom.notFound('No se encontró video');
-		const mostrar = {
-			...videos,
-			portada:{
-				nombre:portada.nombre,
-				createdAt:portada.createdAt
-			}
-		};
-		return mostrar;
+		try {
+			const { rol } = await serviciosUser.procesarToken(token);
+			if (rol !== 'admin' && rol !== 'user') throw Boom.badRequest('No tienes permiso para esta accion');
+			const portada = await respositorioPortada.findOne({ where: { id_portada }, relations: { videos: true } });
+			if (!portada) throw Boom.notFound('No se encontró video');
+			const id_video = portada.videos.id_video;
+			const videos = await respositorioVideo.findOne({
+				where: {
+					id_video
+				}
+			});
+			if (!videos) throw Boom.notFound('No se encontró video');
+			const mostrar = {
+				...videos,
+				portada: {
+					nombre: portada.nombre,
+					createdAt: portada.createdAt
+				}
+			};
+			return mostrar;
+		} catch (error) {
+			throw Boom.notFound('No se encontro elemnto');
+		}
 	}
 	async agregarVideo(token: string, nuevoVideo: VideosRequest) {
-		const { rol } = await serviciosUser.procesarToken(token);
-		if (rol !== 'admin') throw Boom.badRequest('No tienes permiso para esto');
-		const { nombre, miniDesc, url_image, descripcion, url_video } = nuevoVideo;
-		const miPortada = { nombre, miniDesc, url_image };
-		const miVideo = { descripcion, url_video };
-		const portada = respositorioPortada.create(miPortada);
-		const video = respositorioVideo.create(miVideo);
-		await respositorioPortada.manager.save(portada);
-		video.portada = portada;
-		await respositorioVideo.manager.save(video);
-		const mostrar = await respositorioPortada.findOne({
-			where: {
-				id_portada: portada.id_portada
-			},
-			relations: {
-				videos: true
+		try {
+			const { rol } = await serviciosUser.procesarToken(token);
+			if (rol !== 'admin') throw Boom.badRequest('No tienes permiso para esto');
+			const { nombre, miniDesc, url_image, descripcion, url_video } = nuevoVideo;
+			const miPortada = { nombre, miniDesc, url_image };
+			const miVideo = { descripcion, url_video };
+			const portada = respositorioPortada.create(miPortada);
+			const video = respositorioVideo.create(miVideo);
+			await respositorioPortada.manager.save(portada);
+			video.portada = portada;
+			await respositorioVideo.manager.save(video);
+			const mostrar = await respositorioPortada.findOne({
+				where: {
+					id_portada: portada.id_portada
+				},
+				relations: {
+					videos: true
+				}
+			});
+			if (!mostrar || !mostrar.videos) {
+				await respositorioPortada.delete({ id_portada: portada.id_portada });
+				throw Boom.badImplementation();
 			}
-		});
-		if (!mostrar || !mostrar.videos) {
-			await respositorioPortada.delete({id_portada:portada.id_portada});
+
+			return mostrar;
+		} catch (error) {
 			throw Boom.badImplementation();
 		}
-
-		return mostrar;
 	}
-	async eliminarVideo(token:string, id_video:string){
-		const { rol } = await serviciosUser.procesarToken(token);
-		if (rol !== 'admin') throw Boom.badRequest('No tienes permiso para esto');
-		
-		const video = await respositorioVideo.findOne({
-			where:{
-				id_video
-			},
-			relations:{
-				portada:true
+	async eliminarVideo(token: string, id_video: string) {
+		try {
+			const { rol } = await serviciosUser.procesarToken(token);
+			if (rol !== 'admin') throw Boom.badRequest('No tienes permiso para esto');
+
+			const video = await respositorioVideo.findOne({
+				where: {
+					id_video
+				},
+				relations: {
+					portada: true
+				}
+			});
+			if (video) {
+				await respositorioPortada.delete({ id_portada: video.portada.id_portada });
+				await respositorioVideo.delete({ id_video });
 			}
-		});
-		if(video){
-			await respositorioPortada.delete({id_portada:video.portada.id_portada});
-			await respositorioVideo.delete({id_video});
-		}else{
+		} catch (error) {
 			throw Boom.badImplementation();
 		}
 	}

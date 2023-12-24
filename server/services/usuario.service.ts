@@ -37,7 +37,7 @@ export class UsuarioService {
 		if (typeof ver == 'string') throw Boom.badRequest(ver);
 		const { rol, user } = ver;
 		const buscar = await repositorio.findOneBy({ id_usuario: user });
-		if (!buscar) throw 'No tienes permiso para esta accion';
+		if (!buscar) throw Boom.badRequest('No tienes permiso para esta accion');
 		return { rol };
 	}
 	private async generarToken(usu: UsuarioInterface) {
