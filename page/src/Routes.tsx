@@ -3,12 +3,14 @@ import { Login } from './Layouts/Login';
 import { Home } from './Layouts/Home';
 import { Video } from './Layouts/Video';
 import { NotFound } from './components/Notfound';
+import { NuevoVideo } from './Layouts/NuveoVideo';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const rutas = {
     login:'/login',
     home:'/',
-    video:'/video'
+    video:'/video',
+    addVideo:'/addVideo'
 }
 
 
@@ -28,5 +30,9 @@ export const MyRutes =()=>useRoutes([
     {
         path:'*',
         element:<NotFound/>
+    },
+    {
+        path:rutas.addVideo,
+        element:<NuevoVideo/>
     }
 ]);
