@@ -50,3 +50,16 @@ export async function agregarVideo(autorization: string, nuevaImagen: VideoNuevo
     const { id_portada, nombre, url_image, miniDesc, createdAt }: PortadaInterface = datos;
     return { id_portada, nombre, url_image, miniDesc, createdAt };
 }
+
+export async function eliminarVideo(autorization:string, id_video:string){
+    const url = import.meta.env.VITE_URLBASE;
+    const ft = await fetch(`${url}/video/${id_video}`, {
+        method: 'DELETE',
+        headers: {
+            autorization
+        }
+    });
+    if (!ft.ok) {
+        throw 'No se pudo borrar elemento';
+    }
+}

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { agregarVideo, leerUnSoloVideo, leerVideos } from "../api/videoRequest";
+import { agregarVideo, eliminarVideo, leerUnSoloVideo, leerVideos } from "../api/videoRequest";
 
 const initialState: { portadas: PortadaInterface[], loading: boolean, video: LosVideosInteface } = {
     portadas: [],
@@ -43,6 +43,14 @@ const agregarNuevoVideo = createAsyncThunk(
     }
 );
 
+const eliminarUnVideo = createAsyncThunk(
+    'eliminar/Video',
+    async ({token, id_video}:{token:string, id_video:string}) =>{
+        await eliminarVideo(token, id_video);
+        return id_video
+    }
+);
+
 const videoaSlice = createSlice({
     name: 'videos',
     initialState,
@@ -69,6 +77,10 @@ const videoaSlice = createSlice({
             state.portadas = [...datos, action.payload];
             state.loading = false;
         });
+
+        builder.addCase(eliminarUnVideo.fulfilled, ()=>{
+            
+        });
     }
 });
 
@@ -79,5 +91,6 @@ export {
     portadaReducer,
     llamarPortadas,
     videoSeleccionado,
-    agregarNuevoVideo
+    agregarNuevoVideo,
+    eliminarUnVideo
 }
