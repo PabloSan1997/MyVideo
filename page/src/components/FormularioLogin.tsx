@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { loggear } from "../slice/userSlice";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import React from "react";
 
 const initalState = { userName: '', password: '' };
@@ -12,7 +12,10 @@ const inputStyle =
 
 export function FormularioLogin() {
     const dispatch = useAppDispatch();
+    const error = useAppSelector(state => state.user.error);
     const [texto, setTexto] = React.useState<UsuarioLogin>(initalState);
+    const [errorTexto, setErrorTexto] = React.useState<UsuarioLoginChecarUsuario>({ userName: false, password: false });
+
     const escribirUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTexto({ ...texto, userName: e.target.value });
     }
@@ -24,8 +27,14 @@ export function FormularioLogin() {
         e.preventDefault();
         if (texto.password && texto.userName) {
             dispatch(loggear(texto));
+        } else {
+            setErrorTexto({
+                userName: !texto.userName,
+                password: !texto.password
+            });
         }
     }
+    
     return (
         <form
             onSubmit={subir}
@@ -36,6 +45,7 @@ export function FormularioLogin() {
                 htmlFor="username"
                 className={labelStyle}
             >User Name</label>
+            {errorTexto.userName && <p className="text-red-800">Escriba su nombre de usuario</p>}
             <input
                 type="text"
                 id="username"
@@ -48,6 +58,7 @@ export function FormularioLogin() {
                 htmlFor="password"
                 className={labelStyle}
             >Password</label>
+            {errorTexto.password && <p className="text-red-800">Escriba su contraseña</p>}
             <input
                 type="password"
                 id="password"
@@ -60,6 +71,11 @@ export function FormularioLogin() {
                 type="submit"
                 className='rounded-xl border-2 text-rojoVideos-950 border-rojoVideos-950 w-fit m-auto p-1 px-4 text-xl mt-2 hover:bg-rojoVideos-950 bg-rojoVideos-200 hover:text-rojoVideos-50'
             >Entrar</button>
+            {error && (
+                <p
+                    className="mt-3 text-red-800"
+                >Usuario o contraseña incorectos</p>
+            )}
         </form>
     );
 }

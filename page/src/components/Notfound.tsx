@@ -7,7 +7,8 @@ export function NotFound() {
         name: '',
         token: '',
         loading: false,
-        modo: false
+        modo: false,
+        error:false
     }
     return (
         <>

@@ -6,6 +6,11 @@ type UsuarioLogin = {
 	password: string;
 };
 
+type UsuarioLoginChecarUsuario = {
+    userName: boolean;
+    password: boolean;
+}
+
 type Respuesta = {
     statusCode:number;
     message:string;
@@ -17,6 +22,7 @@ type UserInitialState = {
     token: string,
     loading: boolean,
     modo:boolean;
+    error:boolean;
 }
 
 type Children = {

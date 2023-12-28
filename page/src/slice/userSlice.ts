@@ -7,18 +7,15 @@ const initialState: UserInitialState = {
     name: '',
     token: '',
     loading: false,
-    modo: false
+    modo: false,
+    error:false
 }
 
 const loggear = createAsyncThunk(
     'loggearAccion/post',
     async (data: UsuarioLogin) => {
-        try {
-            const respuesta = await loginRequest(data);
-            return respuesta;
-        } catch (error) {
-            return initialState;
-        }
+        const respuesta = await loginRequest(data);
+        return respuesta;
     }
 );
 
@@ -48,6 +45,7 @@ const userSlice = createSlice({
             state.url_image = respuesta.url_image;
             state.loading = false;
             state.modo = respuesta.modo;
+            state.error=false;
         });
         builder.addCase(loggear.rejected, (state) => {
             state.name = '';
@@ -55,6 +53,7 @@ const userSlice = createSlice({
             state.url_image = '';
             state.loading = false;
             state.modo = false;
+            state.error = true;
         });
         builder.addCase(loggear.pending, (state) => {
             state.loading = true;
