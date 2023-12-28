@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server:{
     port:3007
+  },
+  build:{
+    outDir:'../server/static/pagina'
   }
 })

@@ -6,7 +6,8 @@ export function NotFound() {
         url_image: '',
         name: '',
         token: '',
-        loading: false
+        loading: false,
+        modo: false
     }
     return (
         <>
